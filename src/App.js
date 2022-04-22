@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import './App.css';
 import * as XLSX from 'xlsx'
 import Button from 'react-bootstrap'
-
+import PdfCreater from './Components/PdfCreater';
 
 
 function App() {
@@ -107,7 +107,7 @@ if(excelFile===undefined){
      </div>
 
       <form onSubmit={(e)=>handleGrupoSubmit(e)}>
-     <input type="text"></input>
+      <input type="text"></input>
         <select>
           {reduced}
         </select>
@@ -118,6 +118,8 @@ if(excelFile===undefined){
         <h2>{}</h2>
 
       </div>
+
+      <PdfCreater />
      
 
     </div>

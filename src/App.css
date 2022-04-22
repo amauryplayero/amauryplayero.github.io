@@ -1,3 +1,7 @@
 #calificaciones{
     border: red solid;
 }
+
+table td{
+    border: black solid;
+}
