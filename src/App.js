@@ -11,11 +11,9 @@ function App() {
   
 const [grades, setGrades] = useState('')
 const [excelFile, setexcelFile] = useState()
-// const [calificaciones, setCalificaciones] = useState()
 const [objKey, setObjkey] = useState()
-const [gradoInputted, setGradoInputted] = useState()
-// const [options, setOptions] = useState([])
-  
+const [nombreDeMateria, setNombreDeMateria] = useState()
+const [calificacion, setCalificacion] = useState()
   
   const onChange = (e) => {
     const [file] = e.target.files;
@@ -53,7 +51,7 @@ if(excelFile===undefined){
   }
 
 
-  const showCalificaciones = (grado, keyNum) =>{
+  const showCalificaciones = async function(grado, keyNum){
     let materias = []
     let notas = []
     console.log(excelFile[grado])
@@ -77,6 +75,10 @@ if(excelFile===undefined){
         console.log(materias[i+2], notas[i])
       }
     }
+    
+    
+
+    
   }
     
   const handleGrupoSubmit =(e)=>{
