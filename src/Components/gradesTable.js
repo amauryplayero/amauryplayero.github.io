@@ -1,9 +1,31 @@
 import React from 'react'
 
 export default function GradesTable() {
+  // const onChange = (e) => {
+  //   const [file] = e.target.files;
+  //   const reader = new FileReader();
+
+  //   reader.onload = (evt) => {
+  //     const bstr = evt.target.result;
+  //     const wb = XLSX.read(bstr, { type: "binary" });
+  //     setexcelFile(wb.Sheets)
+      
+  //   };
+  //   reader.readAsBinaryString(file);
+  //   // FUTURE REFERENCE WITH S3 BUCKET
+  //   // axios.get('http://localhost:3003/uploadTest').then(
+  //   //   res=>console.log(res)
+  //   // )
+   
+  // };
+
+  
+
+    
+  
   return (
       <>
-   
+     
     <table>
     <tr>
     <th>Name</th>

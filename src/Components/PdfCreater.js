@@ -13,7 +13,7 @@ export default function PdfCreater() {
    
     const url = 'http://localhost:3003/template'
    
-    // console.log(await url)
+    
     const existingPdfBytes = await fetch(url).then(res=>{
       return res.arrayBuffer()
       })

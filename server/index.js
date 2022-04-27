@@ -15,5 +15,8 @@ app.use(express.static(path.resolve(__dirname, '../build')))
 // })
 
 app.get('/template', ctrl.getTemplate)
+app.get('/uploadTest', ctrl.s3upload)
+app.post('/getS3Document', ctrl.getS3Document)
+app.post('/getCalificaciones', ctrl.getCalificaciones)
 
 app.listen(PORT, ()=>{console.log("listening on" + PORT)})
