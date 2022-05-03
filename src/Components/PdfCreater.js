@@ -7,12 +7,12 @@ import axios from 'axios'
 import GradesTable from './gradesTable'
 
 
-export default function PdfCreater() {
+export default function PdfCreater(props) {
   
+
   async function createPdf(){
    
     const url = 'http://localhost:3003/template'
-   
     
     const existingPdfBytes = await fetch(url).then(res=>{
       return res.arrayBuffer()
@@ -41,7 +41,7 @@ export default function PdfCreater() {
 
   return (
       <>
-    <GradesTable/>
+    
     <button onClick={()=>createPdf()}>CREATE PDF</button>
     </>
   )
