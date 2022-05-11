@@ -2,11 +2,14 @@ import axios from 'axios'
 import {useState, useEffect} from 'react'
 import * as XLSX from 'xlsx'
 import PdfCreater from './PdfCreater'
+import {useNavigate} from 'react-router-dom'
 import GradesTable from './gradesTable'
+import {Buffer} from 'buffer';
 import React from 'react'
+import { stringify } from 'querystring'
 
 export default function Estudiante() {
-
+    const navigate = useNavigate()
     const [excelFile, setExcelFile] = useState()
     const [gradeChosen, setGradeChosen] = useState()
     const [materia, setMateria] = useState([])
@@ -16,17 +19,10 @@ export default function Estudiante() {
 
     const handleGet = (e) =>{
         e.preventDefault()
-        let body = {
-            name:'future impl',
-            curp: 'future implementation'
-        };
-        axios.post('http://localhost:3003/getCalificaciones', body).then(
+        axios.get('http://localhost:3003/getCalificaciones').then(
             res=>{
-                const wb = XLSX.read(res.data, { type: "binary" });
-                // console.log(wb.Sheets)
-                let document = wb.Sheets
-                setExcelFile(document)    
-
+         
+              setExcelFile(res.data)
             }
         )
     }
@@ -92,24 +88,28 @@ export default function Estudiante() {
       }
 
   
-
+    const handleBackButton = () =>{
+        navigate('/')
+      }
 
   return (
     <>
+    <button onClick={()=>handleBackButton()}>go back</button>
+
     <div>Estudiante</div>
-    <button onClick={(e)=>handleGet(e)}>get Calificaciones</button>
-    <div>
-    </div>
+      <button onClick={(e)=>handleGet(e)}>get Calificaciones</button>
+   
     <form onSubmit={(e)=>{handleSubmit(e)}}>
         <label>
             <input placeholder="Nombre del alumno"></input>
-
-            <select>
-                <option>{'grado'}</option>
-                {reduced}
-            </select>
+              <select>
+                  <option>{'grado'}</option>
+                  {reduced}
+              </select>
         </label>
-    <input type="submit" value="Submit"></input>
+
+      <input type="submit" value="Submit"></input>
+      
     </form>
    
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function GradesTable(props) {
-  console.log(props)
+  // console.log(props)
   let materia = props.materia
   let nota = props.nota
 

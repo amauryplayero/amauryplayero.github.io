@@ -1,24 +1,23 @@
 const { PDFDocument, StandardFonts } = require("pdf-lib")
-const XLSX = require('xlsx')
 const { writeFileSync, readFileSync, createReadStream } = require('fs')
-const utf8 = require('utf8');
 const { StringDecoder } = require('string_decoder');
+const XLSX = require('xlsx')
+const utf8 = require('utf8');
 const AWS = require('aws-sdk');
 require('dotenv').config({path: __dirname + '/../.env'})
 const {ID, SECRET, BUCKET_NAME, KEY} = process.env
-
 
 const s3 = new AWS.S3({
         accessKeyId: ID,
         secretAccessKey: SECRET
         });
 
-    async function getTemplate(req,res) {
+async function getTemplate(req,res) {
       const document = readFileSync("../src/boleta.pdf");
       res.status(200).send(document)
     }
     
-    async function s3upload(req, res) {
+async function s3upload(req, res) {
         const params = {
           Bucket: BUCKET_NAME, 
           Key: KEY,
@@ -36,56 +35,100 @@ const s3 = new AWS.S3({
         )
     }
 
-    async function getS3Document(req, res) {
+
+async function getCalificaciones(req, res) {
+       
         const params = {
             Bucket: BUCKET_NAME, 
             Key: KEY,
           };
 
-    }
-
-    async function getCalificaciones(req, res) {
-       
-        let name = req.body.name
-        let curp = req.body.curp
-
-        const params = {
-            Bucket: BUCKET_NAME, 
-            Key: 'DELETE',
-          };
-
-        const documentoExcel = await s3.getObject(params, async function (err, data){
+        const documentoExcel = s3.getObject(params, async function (err, data){
             if(err) {
                 res.status(200);
                 res.end('Error Fetching File');            
             }
-            var base64data = Buffer.from(data.Body, 'utf-32');    
-            res.status(200).send(base64data)        
+            // var base64data = Buffer.from(data.Body, 'binary'); 
+            // const buffer = Buffer.from(data.Body, {type:'utf-8'})
+            // console.log(await buffer)
+            const convertido = XLSX.read(data.Body, {type:'array'})
+            const decoded = data.Body.toString('utf8')
+            
+            res.status(200).send(data.Body)        
         })
+
+      
     }
 
-    async function uploadCalificaciones(req, res){
+async function uploadCalificaciones(req, res){
+        // let loading = false
         const body = req.body.fileEncoded
-        const buffer = Buffer.from(body, 'binary')
-        console.log(buffer)
+        
+        const buffer = Buffer.from(body, "utf-8")
+        console.log('this is the buffer=----->', buffer)
+
+
+       
+        const paramsForDelete = {
+            Bucket: BUCKET_NAME, 
+            Key: KEY,
+          };
+
+        await s3.deleteObject(paramsForDelete, function(err, data){
+            
+            if(err) {
+                throw err
+            }
+            console.log(`file uploaded suzzessfully deleted from ${data.Location}`)
+            
+        })
+
         const params = {
             Bucket: BUCKET_NAME, 
-            Key: 'DELETE',
-            Body: body
-          };
-           s3.upload(params, function(err, data){
+            Key: KEY,
+            Body: buffer
+        };
+        
+        await s3.upload(params, function(err, data){
         if(err) {
             throw err
         }
-        console.log(`file uploaded suzzessfully at ${data.Location}`)
+        res.status(200).send(`file uploaded successfully at ${data.Location}`)   
         })
-        res.status(200).send('hai')        
+        
+       
     }
+
+async function deleteCalificaciones(req, res){ 
+
+    const paramsForDelete = {
+        Bucket: BUCKET_NAME, 
+        Key: KEY,
+        
+      };
+      
+    s3.deleteObject(paramsForDelete, function(err, data){
+            
+        if(err) {
+            throw err
+            // res.status(400).send(err)
+        } else {
+        console.log(`file uploaded suzzessfully deleted from ${data.Location}`)
+        res.status(200).send('success')
+        }
+
+    })
+    // res.status(200).send('deleted?')
+
+}
+
+
+
 
 module.exports = {
     getTemplate,
     s3upload,
-    getS3Document,
     getCalificaciones,
-    uploadCalificaciones
+    uploadCalificaciones,
+    deleteCalificaciones
 }

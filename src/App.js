@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import {useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import './App.css';
 import * as XLSX from 'xlsx'
 import Button from 'react-bootstrap'
@@ -10,19 +11,9 @@ import axios from 'axios'
 import AWS from 'aws-sdk'
 
 
-
-
-
-// // const ID = 'AKIA4XU2EYTEJIA7SLOZ';
-// const SECRET = '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';
-// const BUCKET_NAME = "calificacionesprueba"
-
-// const s3 = new AWS.S3({
-//   accessKeyId: ID,
-//   secretAccessKey: SECRET
-// });
-
 function App() {
+  let navigate = useNavigate()
+
  
   
 const [grades, setGrades] = useState('')
@@ -36,52 +27,39 @@ const [calificacion, setCalificacion] = useState()
     const [file] = e.target.files;
     
     const reader = new FileReader();
-    console.log(file)
     reader.onload = (evt) => {
       const bstr = evt.target.result;
       let body = {
         fileEncoded:bstr
       }
-  
-  
-      axios.post('http://localhost:3003/uploadCalificaciones',body ).then(
-        res=>console.log(res)
-      )
 
       const wb = XLSX.read(bstr, { type: "binary" });
-      console.log(bstr)
       setexcelFile(wb.Sheets)
       
     };
     reader.readAsBinaryString(file);
-    // FUTURE REFERENCE WITH S3 BUCKET
-    // let body = {
-    //   fileName:'calificaciones',
-    //   file: excelFile
-    // }
-   
+
   };
+
   const handleUploadFile = () =>{
 
-    let base64data = Buffer.from(JSON.stringify(excelFile), 'binary');
-    
-  const reader = new FileReader();
-    let returned= base64data.toString()
-    console.log(returned)
+    const file = JSON.stringify(excelFile)
     let body = {
-      fileEncoded:base64data
+      fileEncoded:file
     }
+    axios.post('http://localhost:3003/uploadCalificaciones',body ).then(
+      res=>{
+      console.log(res)
+      alert(res.data)
+      navigate('/')
 
-
-    // axios.post('http://localhost:3003/uploadCalificaciones',body ).then(
-    //   res=>console.log(res)
-    // )
+      }
+    ).catch(err=> alert(err))
  
   }
 
 
-let reduced
-let options
+
 
 useEffect(()=>{
 },[excelFile, objKey])
@@ -103,21 +81,26 @@ useEffect(()=>{
         ([key, value])=>{if(key.includes('B')){
           if(value.h.includes(name)){
 
-            let keyNum = key.slice(1)
-            
-            
+            let keyNum = key.slice(1)    
             setObjkey(keyNum)
-          //  showCalificaciones(gradoInputted, keyNum)
           }
         }}
       ) 
     }
 
+    const handleBackButton = () =>{
+      navigate('/')
+    }
+
+
+
   return (
+    
     <div className="App">
+      <button onClick={()=>handleBackButton()}>go back</button>
       <div>upload current calificaciones</div>
      <input type="file" onChange={(e)=>onChange(e)} />
-     <button onClick={()=>handleUploadFile()}>upload</button>
+     <button onClick={()=>handleUploadFile()}>upload file</button>
      {/* <input type="button" id="upload" value="Upload" /> */}
      <div>
        {grades}
@@ -128,6 +111,7 @@ useEffect(()=>{
         <h2>{}</h2>
 
       </div>
+  
       
      
      

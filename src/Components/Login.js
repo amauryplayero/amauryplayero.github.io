@@ -14,8 +14,8 @@ let navigate = useNavigate()
 
   return (
       <>
-    <div><button id="admin" onClick={(e)=>handleClick(e)}>Administrador</button></div>
-    <div><button id="estudiante" onClick={(e)=>handleClick(e)}>Estudiante</button></div>
+    <div><button id="admin" onClick={(e)=>handleClick(e)}>I am an Administrador</button></div>
+    <div><button id="estudiante" onClick={(e)=>handleClick(e)}>I am an Estudiante</button></div>
     </>
   )
 }
