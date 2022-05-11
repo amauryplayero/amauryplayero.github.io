@@ -42,12 +42,14 @@ const [calificacion, setCalificacion] = useState()
   };
 
   const handleUploadFile = () =>{
-
+    if(excelFile===undefined){
+      alert('Elija documento')
+    } else{
     const file = JSON.stringify(excelFile)
     let body = {
       fileEncoded:file
     }
-    axios.post('http://localhost:3003/uploadCalificaciones',body ).then(
+    axios.post('http://localhost:3003/uploadCalificaciones',body).then(
       res=>{
       console.log(res)
       alert(res.data)
@@ -57,6 +59,7 @@ const [calificacion, setCalificacion] = useState()
     ).catch(err=> alert(err))
  
   }
+}
 
 
 
@@ -95,10 +98,10 @@ useEffect(()=>{
 
 
   return (
-    
-    <div className="App">
+    <>
       <button onClick={()=>handleBackButton()}>go back</button>
-      <div>upload current calificaciones</div>
+    <div className="App">
+      <div>Suba calificaciones actuales</div>
      <input type="file" onChange={(e)=>onChange(e)} />
      <button onClick={()=>handleUploadFile()}>upload file</button>
      {/* <input type="button" id="upload" value="Upload" /> */}
@@ -119,6 +122,7 @@ useEffect(()=>{
      
 
     </div>
+    </>
   );
 }
 

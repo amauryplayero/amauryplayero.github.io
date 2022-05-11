@@ -16,16 +16,15 @@ export default function Estudiante() {
     const [nota, setNota] = useState([])
     // const [nombreDelAlumno, setNombreDelAlumno] = useState('')
     let reduced 
-
-    const handleGet = (e) =>{
-        e.preventDefault()
-        axios.get('http://localhost:3003/getCalificaciones').then(
-            res=>{
-         
-              setExcelFile(res.data)
-            }
-        )
-    }
+    useEffect(() => {
+      axios.get('http://localhost:3003/getCalificaciones').then(
+          res=>{
+       
+            setExcelFile(res.data)
+          }
+      )
+      
+    }, []);
 
     const showCalificaciones = async function(grado, keyNum){
         // console.log(excelFile[grado])
@@ -63,18 +62,20 @@ export default function Estudiante() {
         e.preventDefault()
         let name = e.target[0].value.toUpperCase()
         let gradoInputted= e.target[1].value
+        if(name.length===0 || gradoInputted==='grado'){
+          alert('fill out all info')
+        } else{
         let listaDeNombres = Object.entries(excelFile[gradoInputted]).forEach(
             ([key, value])=>{if(key.includes('B')){
               if(value.h.includes(name)){
     
                 let keyNum = key.slice(1)
-                
-                
-             
+
                showCalificaciones(gradoInputted, keyNum)
               }
             }}
-          ) 
+          )
+        } 
    
     }
   
@@ -94,31 +95,36 @@ export default function Estudiante() {
 
   return (
     <>
+    <img src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2019/08/09/000610383W.jpg" id="headerImage"></img>
     <button onClick={()=>handleBackButton()}>go back</button>
 
     <div>Estudiante</div>
-      <button onClick={(e)=>handleGet(e)}>get Calificaciones</button>
+    
    
     <form onSubmit={(e)=>{handleSubmit(e)}}>
-        <label>
-            <input placeholder="Nombre del alumno"></input>
-              <select>
+        <label id="labelInput">
+          <div id="inputContainer">
+            <input placeholder="Nombre del alumno" id="nombreInput"></input>
+              <select id="gradoSelect">
                   <option>{'grado'}</option>
                   {reduced}
               </select>
+               <input type="submit" value="Submit" id="submitButton"></input>
+          </div>
         </label>
 
-      <input type="submit" value="Submit"></input>
-      
+
     </form>
    
 
     {/* <input placeholder=""></input> */}
-    <PdfCreater nota={nota}
-                materia={materia}/>
     
     <GradesTable nota={nota}
                 materia={materia}/>
+
+    <PdfCreater nota={nota}
+                materia={materia}/>
+    
 
     </>
     

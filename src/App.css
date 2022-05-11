@@ -1,7 +1,101 @@
 #calificaciones{
-    border: red solid;
+    /* border: red solid; */
+}
+
+.App{
+    padding: 60px 0 0 60px;
+}
+
+#headerImage{
+   width: 100%; 
+   height: 200px; 
+   object-fit: cover;
+   object-position: 100% 100%;
+}
+
+#escuelaLogo{
+    width: 120px;
+    position:fixed;
+    top:40px;
+    left: 40px;
+    z-index: 3;
+}
+#botonesDivContainer{
+    /* border: red solid; */
+    height: 90px;
+    display: flex;
+
+}
+.botonDeLogin:hover{
+    background-color: rgb(232, 232, 232);
+
+}
+#botonesDiv{
+    /* border: red solid; */
+    width: 300px;
+    height: 300px;
+    margin-left: 30vw;
+    display:flex;
+    justify-content: space-evenly;
+}
+#estudiante{
+    /* border: red solid; */
+    height: 120px;
+    width: 120px;
+}
+
+#admin{
+    /* border: red solid; */
+    height: 120px;
+    width: 120px;
+
 }
 
 table td{
     border: black solid;
+
+}
+
+#inputContainer{
+    /* border: red solid; */
+    display: flex;
+    flex-direction: column;
+
+}
+
+#labelInput{
+    /* border: #ff0000 solid; */
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    align-items: center;
+}
+#nombreInput{
+    margin-bottom: 10px;
+    width: 150px;
+    border: none;
+    padding: 5px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 2px;
+}
+
+#gradoSelect{
+    width: 65px;
+    margin-bottom: 10px;
+    border-radius: 0;
+    border:rgb(189, 189, 189) solid 1px;
+    padding: 3px
+}
+
+#submitButton{
+    border: none;
+    padding: 6px;
+}
+
+#submitButton:hover{
+    background-color: rgb(140, 140, 167);
+}
+
+#downloadPdfButton{
+    margin-top: 40px;
 }

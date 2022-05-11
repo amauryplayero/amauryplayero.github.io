@@ -79,7 +79,7 @@ async function uploadCalificaciones(req, res){
             if(err) {
                 throw err
             }
-            console.log(`file uploaded suzzessfully deleted from ${data.Location}`)
+            console.log(`Archivo anterior se ha borrado.`)
             
         })
 
@@ -93,7 +93,7 @@ async function uploadCalificaciones(req, res){
         if(err) {
             throw err
         }
-        res.status(200).send(`file uploaded successfully at ${data.Location}`)   
+        res.status(200).send(`Documento se ha guardado exitosamente.`)   
         })
         
        
