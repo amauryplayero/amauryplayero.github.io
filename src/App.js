@@ -100,8 +100,11 @@ useEffect(()=>{
   return (
     <>
       <button onClick={()=>handleBackButton()}>go back</button>
+      <div id="drop_zone" ondrop={()=>handleUploadFile()}>
+            <p>Drag one or more files to this Drop Zone ...</p>
+      </div>
     <div className="App">
-      <div>Suba calificaciones actuales</div>
+      <div>Seleccione calificaciones actuales</div>
      <input type="file" onChange={(e)=>onChange(e)} />
      <button onClick={()=>handleUploadFile()}>upload file</button>
      {/* <input type="button" id="upload" value="Upload" /> */}

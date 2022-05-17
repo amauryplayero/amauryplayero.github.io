@@ -2,8 +2,9 @@ import axios from 'axios'
 import {useState, useEffect} from 'react'
 import * as XLSX from 'xlsx'
 import PdfCreater from './PdfCreater'
-import {useNavigate} from 'react-router-dom'
 import GradesTable from './gradesTable'
+import ConstanciaCreater from './ConstanciaCreater'
+import {useNavigate} from 'react-router-dom'
 import {Buffer} from 'buffer';
 import React from 'react'
 import { stringify } from 'querystring'
@@ -14,6 +15,10 @@ export default function Estudiante() {
     const [gradeChosen, setGradeChosen] = useState()
     const [materia, setMateria] = useState([])
     const [nota, setNota] = useState([])
+    const [signedIn, setSignedIn] = useState(false)
+    const [nombreDelAlumno, setNombreDelAlumno] = useState('')
+    const [cicloEscolar, setCicloEscolar] = useState('')
+
     // const [nombreDelAlumno, setNombreDelAlumno] = useState('')
     let reduced 
     useEffect(() => {
@@ -27,11 +32,14 @@ export default function Estudiante() {
     }, []);
 
     const showCalificaciones = async function(grado, keyNum){
-        // console.log(excelFile[grado])
+       console.log(excelFile[grado])
+        let sheet = excelFile[grado]
         let materias = []
         let notas = []
         Object.entries(excelFile[grado]).forEach(
+
           ([key, value])=>{
+            // excel cell
             if(key.includes('5')&& key.length===2){
               materias.push(value.h)
             }
@@ -47,24 +55,29 @@ export default function Estudiante() {
               console.log(materias[i], notas[i])
               }
               else{
-                console.log(materias[i+2], notas[i])
+              console.log(materias[i+2], notas[i])
               }
         }
+        let nombre = notas[1]
+        let cicloEscolar = sheet.A3.v
+        setCicloEscolar(cicloEscolar)
+        setNombreDelAlumno(nombre)
         setNota(notas)
         setMateria(materias)
         return materias
     }
-
-   
     
  
     const handleSubmit = (e) =>{
         e.preventDefault()
+        setSignedIn(true)
         let name = e.target[0].value.toUpperCase()
         let gradoInputted= e.target[1].value
+
         if(name.length===0 || gradoInputted==='grado'){
           alert('fill out all info')
         } else{
+          setGradeChosen(gradoInputted)
         let listaDeNombres = Object.entries(excelFile[gradoInputted]).forEach(
             ([key, value])=>{if(key.includes('B')){
               if(value.h.includes(name)){
@@ -75,12 +88,12 @@ export default function Estudiante() {
               }
             }}
           )
-        } 
+        }
+
    
     }
   
-    if(excelFile===undefined){
-        
+    if(excelFile===undefined){    
       }else{
         reduced = Object.keys(excelFile).map(
         (element,i)=> {return (
@@ -92,6 +105,28 @@ export default function Estudiante() {
     const handleBackButton = () =>{
         navigate('/')
       }
+      
+    let formElement 
+
+    if(signedIn){
+      formElement = <div>hai</div>
+    }else {
+      formElement = <form id="form"onSubmit={(e)=>{handleSubmit(e)}}>
+      <label id="labelInput">
+        <div id="inputContainer">
+          <p>Nombre Completo</p>
+          <input placeholder="" id="nombreInput"></input>
+          <p>grado</p>
+            <select id="gradoSelect">
+              
+                <option>{''}</option>
+                {reduced}
+            </select>
+             <input type="submit" value="Submit" id="submitButton"></input>
+        </div>
+      </label>
+      </form>
+    }
 
   return (
     <>
@@ -101,20 +136,7 @@ export default function Estudiante() {
     <div>Estudiante</div>
     
    
-    <form onSubmit={(e)=>{handleSubmit(e)}}>
-        <label id="labelInput">
-          <div id="inputContainer">
-            <input placeholder="Nombre del alumno" id="nombreInput"></input>
-              <select id="gradoSelect">
-                  <option>{'grado'}</option>
-                  {reduced}
-              </select>
-               <input type="submit" value="Submit" id="submitButton"></input>
-          </div>
-        </label>
-
-
-    </form>
+    {formElement}
    
 
     {/* <input placeholder=""></input> */}
@@ -124,6 +146,12 @@ export default function Estudiante() {
 
     <PdfCreater nota={nota}
                 materia={materia}/>
+    
+    <ConstanciaCreater nota={nota}
+                        materia={materia}
+                        nombreDelAlumno={nombreDelAlumno}
+                        grado={gradeChosen}
+                        cicloEscolar={cicloEscolar}/>
     
 
     </>

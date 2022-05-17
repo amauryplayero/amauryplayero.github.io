@@ -60,6 +60,7 @@ table td{
     /* border: red solid; */
     display: flex;
     flex-direction: column;
+    
 
 }
 
@@ -71,7 +72,7 @@ table td{
     align-items: center;
 }
 #nombreInput{
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     width: 150px;
     border: none;
     padding: 5px;
@@ -98,4 +99,10 @@ table td{
 
 #downloadPdfButton{
     margin-top: 40px;
+}
+
+/* ADMIN */
+
+#dropZone{
+    
 }

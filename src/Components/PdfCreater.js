@@ -57,7 +57,7 @@ export default function PdfCreater(props) {
 return (
     <>
   
-  <button onClick={()=>createPdf()} id="downloadPdfButton">DOWNLOAD PDF</button>
+  <button onClick={()=>createPdf()} id="downloadPdfButton">DESCARGA PDF</button>
   {boton}
   </>
 )

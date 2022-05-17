@@ -16,6 +16,13 @@ async function getTemplate(req,res) {
       const document = readFileSync("../src/boleta.pdf");
       res.status(200).send(document)
     }
+
+async function getConstanciaTemplate(req,res) {
+    const document = readFileSync("../src/Constancia.pdf");
+    res.status(200).send(document)
+
+
+}
     
 async function s3upload(req, res) {
         const params = {
@@ -129,6 +136,7 @@ module.exports = {
     getTemplate,
     s3upload,
     getCalificaciones,
+    getConstanciaTemplate,
     uploadCalificaciones,
     deleteCalificaciones
 }

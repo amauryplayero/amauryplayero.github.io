@@ -16,6 +16,7 @@ app.use(express.static(path.resolve(__dirname, '../build')))
 
 app.get('/template', ctrl.getTemplate)
 app.get('/uploadTest', ctrl.s3upload)
+app.get('/getConstanciaTemplate', ctrl.getConstanciaTemplate)
 
 app.get('/getCalificaciones', ctrl.getCalificaciones)
 app.post('/uploadCalificaciones', ctrl.uploadCalificaciones)
