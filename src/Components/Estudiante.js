@@ -8,6 +8,7 @@ import {useNavigate} from 'react-router-dom'
 import {Buffer} from 'buffer';
 import React from 'react'
 import { stringify } from 'querystring'
+import { resolveModuleName } from 'typescript'
 
 export default function Estudiante() {
     const navigate = useNavigate()
@@ -18,6 +19,7 @@ export default function Estudiante() {
     const [signedIn, setSignedIn] = useState(false)
     const [nombreDelAlumno, setNombreDelAlumno] = useState('')
     const [cicloEscolar, setCicloEscolar] = useState('')
+
 
     // const [nombreDelAlumno, setNombreDelAlumno] = useState('')
     let reduced 
@@ -68,31 +70,33 @@ export default function Estudiante() {
     }
     
  
-    const handleSubmit = (e) =>{
+    const handleSubmitForm = (e) =>{
         e.preventDefault()
-        setSignedIn(true)
         let name = e.target[0].value.toUpperCase()
         let gradoInputted= e.target[1].value
-
-        if(name.length===0 || gradoInputted==='grado'){
-          alert('fill out all info')
+        
+        if(name.length===0 || gradoInputted===''){
+          alert('Porfavor llene la informacion correctamente ')
         } else{
           setGradeChosen(gradoInputted)
-        let listaDeNombres = Object.entries(excelFile[gradoInputted]).forEach(
+          let listaDeNombres = Object.entries(excelFile[gradoInputted]).forEach(
             ([key, value])=>{if(key.includes('B')){
               if(value.h.includes(name)){
-    
+                
                 let keyNum = key.slice(1)
+                
+                showCalificaciones(gradoInputted, keyNum)
+              } else {
 
-               showCalificaciones(gradoInputted, keyNum)
               }
             }}
-          )
-        }
+            )
+            setSignedIn(true)
+          }
 
    
     }
-  
+
     if(excelFile===undefined){    
       }else{
         reduced = Object.keys(excelFile).map(
@@ -109,9 +113,9 @@ export default function Estudiante() {
     let formElement 
 
     if(signedIn){
-      formElement = <div>hai</div>
+      formElement = <div></div>
     }else {
-      formElement = <form id="form"onSubmit={(e)=>{handleSubmit(e)}}>
+      formElement = <form id="form"onSubmit={(e)=>{handleSubmitForm(e)}}>
       <label id="labelInput">
         <div id="inputContainer">
           <p>Nombre Completo</p>
@@ -143,10 +147,11 @@ export default function Estudiante() {
     
     <GradesTable nota={nota}
                 materia={materia}/>
-
+    
     <PdfCreater nota={nota}
                 materia={materia}/>
-    
+    <br></br>
+    <br></br>
     <ConstanciaCreater nota={nota}
                         materia={materia}
                         nombreDelAlumno={nombreDelAlumno}

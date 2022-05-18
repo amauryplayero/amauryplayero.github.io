@@ -7,15 +7,14 @@ import fileDownload from 'js-file-download'
 
 export default function ConstanciaCreater(props) {
     let infoReceived = props.nota
+    
+    let nota = props.nota
     let materia = props.materia
     let nombreDelAlumno = props.nombreDelAlumno
     let grado = props.grado
     let cicloEscolar = props.cicloEscolar
     let yearOnly = cicloEscolar.substring(cicloEscolar.indexOf('2'))
-
-    
-
-    let nota = props.nota
+    let promedio = props.nota[16]
 
     const url = 'http://localhost:3003/getConstanciaTemplate'
 
@@ -23,40 +22,66 @@ export default function ConstanciaCreater(props) {
         const existingPdfBytes = await fetch(url).then(res=>{
             return res.arrayBuffer()
             })
-          const pdfDoc = await PDFDocument.load(existingPdfBytes)
-          const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
+
+        const pdfDoc = await PDFDocument.load(existingPdfBytes)
+        const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
         
-          const pages = pdfDoc.getPages()
-          const firstPage = pages[0]
-      
-          
-          const { width, height } = firstPage.getSize()
-          const fontSize = 10
-          let vertical = 418
+        const pages = pdfDoc.getPages()
+        const firstPage = pages[0]
+        const { width, height } = firstPage.getSize()
+        const fontSize = 10
+         
           
         let filteredMaterias = materia.filter(function(cv, i){
               let materiaOnly = cv.split('/')[0]
               return i>1 && i<11 
         })
-        
-        filteredMaterias.map((e,i)=>{
-                
-            let horizontal = 200
-            let placement = {
-                x: horizontal,
-                y: vertical,
-                size: fontSize,
-                font: timesRomanFont,
-                color: rgb(0,1,0)
+
+        let filteredNotas = nota.filter(function(cv,i){
+            if(i>1 && i<11){
+              return i
             }
-
-            let materiaNameOnly = e.split('/')[0]
-
-            firstPage.drawText(`${materiaNameOnly}`, placement);
-            vertical-= 14.5
         })
 
-           // NOMBRE
+        filteredNotas.push(promedio)
+        
+
+        function drawInCells(input, column){
+          let vertical = 418
+
+          return input.map((e,index)=>{
+            let horizontal 
+            let element
+
+            if(column==='left'){
+              element = e.split('/')[0]
+              horizontal = 200 }
+            else {
+              element = e
+              horizontal = 365 
+
+            }
+
+            let placement = {
+              x: horizontal,
+              y: vertical,
+              size: fontSize,
+              font: timesRomanFont,
+              color: rgb(1, 0, 0)
+            }
+
+            firstPage.drawText(`${element}`, placement);
+            
+            index===5 ? vertical-=27.5 : vertical-= 14.5
+          })
+        }
+
+        drawInCells(filteredMaterias, 'left')
+        drawInCells(filteredNotas, 'right')
+
+
+
+           // NAME
         firstPage.drawText(`${nombreDelAlumno}`, {
             x: 200,
             y: 530,
@@ -65,7 +90,7 @@ export default function ConstanciaCreater(props) {
             color: rgb(1, 0, 0),
           });
 
-        //   GRADO
+        //   GRADE
         let gradoOnly = grado.slice(0,-1)
           firstPage.drawText(`${gradoOnly}`, {
             x: 289,
@@ -74,7 +99,7 @@ export default function ConstanciaCreater(props) {
             font: timesRomanFont,
             color: rgb(1, 0, 0),
           });
-        //  GRUPO
+        //  GROUP
           firstPage.drawText(`${grado[2]}`, {
             x: 375,
             y: 495,
@@ -107,7 +132,7 @@ export default function ConstanciaCreater(props) {
     return (
         <>
 
-        <button onClick={()=>handleClick()}>DESCARGA CONSTANCIA</button>
+        <button onClick={()=>handleClick()}>CONSTANCIA EN PDF</button>
         </>
     )
     }

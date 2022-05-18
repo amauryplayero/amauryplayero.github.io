@@ -3,7 +3,7 @@
 }
 
 .App{
-    padding: 60px 0 0 60px;
+    
 }
 
 #headerImage{
@@ -22,8 +22,11 @@
 }
 #botonesDivContainer{
     /* border: red solid; */
-    height: 90px;
+    height: 350px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+
 
 }
 .botonDeLogin:hover{
@@ -32,9 +35,8 @@
 }
 #botonesDiv{
     /* border: red solid; */
-    width: 300px;
-    height: 300px;
-    margin-left: 30vw;
+    width: 500px;
+    height: fit-content;
     display:flex;
     justify-content: space-evenly;
 }
@@ -103,6 +105,36 @@ table td{
 
 /* ADMIN */
 
+#dropZoneContainer{
+    display: flex;
+    justify-content: center;
+}
+
 #dropZone{
+    border: red solid;
+    width: 50%;
+}
+
+#fileUploadContainer{
+    /* border: red solid; */
+    display: flex;
     
+    justify-content: center;
+}
+
+#fileUpload{
+    /* border: red solid; */
+    background-color: rgb(227, 227, 227);
+    border-radius:18px;
+    padding: 15px;
+    width: fit-content;
+}
+
+#uploadFileButton{
+    background-color: rgb(37, 189, 37);
+    color: white;
+    font-weight: bold;
+    border-radius: 9px;
+    border: none;
+    padding: 5px;
 }

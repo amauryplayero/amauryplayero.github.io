@@ -37,7 +37,7 @@ async function s3upload(req, res) {
                 }
             console.log(`file uploaded suzzessfully at ${data.Location}`)
         })
-        res.status(200).send("file uploaded suzzessfully").catch(
+        res.status(200).send("Success!").catch(
             err=> res.status(400).send(err)
         )
     }

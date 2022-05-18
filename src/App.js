@@ -44,17 +44,15 @@ const [calificacion, setCalificacion] = useState()
   const handleUploadFile = () =>{
     if(excelFile===undefined){
       alert('Elija documento')
-    } else{
+    } else {
     const file = JSON.stringify(excelFile)
     let body = {
       fileEncoded:file
     }
     axios.post('http://localhost:3003/uploadCalificaciones',body).then(
       res=>{
-      console.log(res)
       alert(res.data)
       navigate('/')
-
       }
     ).catch(err=> alert(err))
  
@@ -100,14 +98,21 @@ useEffect(()=>{
   return (
     <>
       <button onClick={()=>handleBackButton()}>go back</button>
-      <div id="drop_zone" ondrop={()=>handleUploadFile()}>
-            <p>Drag one or more files to this Drop Zone ...</p>
+      <div id="dropZoneContainer">
+        {/* <div id="dropZone" ondrop={()=>handleUploadFile()}>
+              <p>Drag one or more files to this Drop Zone ...</p>
+        </div> */}
       </div>
+
     <div className="App">
-      <div>Seleccione calificaciones actuales</div>
-     <input type="file" onChange={(e)=>onChange(e)} />
-     <button onClick={()=>handleUploadFile()}>upload file</button>
-     {/* <input type="button" id="upload" value="Upload" /> */}
+      <div id="fileUploadContainer">
+        <div id="fileUpload">
+            <p>Seleccione calificaciones actuales</p>
+          <input type="file" onChange={(e)=>onChange(e)} />
+          <button onClick={()=>handleUploadFile()} id="uploadFileButton">UPLOAD</button>
+        </div>
+        {/* <input type="button" id="upload" value="Upload" /> */}
+     </div>
      <div>
        {grades}
      </div>
@@ -117,12 +122,6 @@ useEffect(()=>{
         <h2>{}</h2>
 
       </div>
-  
-      
-     
-     
-     
-     
 
     </div>
     </>
