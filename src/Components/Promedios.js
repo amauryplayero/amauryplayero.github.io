@@ -10,6 +10,7 @@ export default function Promedios() {
     const [promediosDePrimero, setPromediosDePrimero] = useState()
     const [promediosDeSegundo, setPromediosDeSegundo] = useState()
     const [promediosDeTercero, setPromediosDeTercero] = useState()
+    const [nombrePromedio, setNombrePromedio] = useState()
 
  
 
@@ -99,42 +100,115 @@ export default function Promedios() {
         let object = promediosDeTercero.Sheets[promediosTrimestre1]
         let entries = Object.entries(promediosDeTercero.Sheets[promediosTrimestre1])
         // array of arrays. inside contains the object
-        let filteredEntriesThatContainProm = entries.filter(entry=>{
+        let filteredEntriesThatContainNombre = entries.filter(entry=>{
             return entry[1].v==='NOMBRE DEL ALUMNO'
         })
+        let filteredEntriesThatContainProm = entries.filter(entry=>{
+            return entry[1].v==='PROM.'
+        })
 
+
+        
         let segundaTab = Object.entries(promediosDeTercero.Sheets[promediosKey])
 
-    
-
-
+        
         let numeroInicial 
-
-        let celdas = filteredEntriesThatContainProm.map((e, i)=>{
-           numeroInicial = parseInt(e[0].replace(/\D/g, ""))
+        
+        let celdasDeProm = filteredEntriesThatContainProm.map((e, i)=>{
+            numeroInicial = parseInt(e[0].replace(/\D/g, ""))
             numeroInicial+=1
             return e[0]
             //  EG. 'N5'
         })
-  
-        let letraOnly = celdas.map(e=>{
-           return e.replace(/[0-9]/g, '')
+        let celdasDeNom = filteredEntriesThatContainNombre.map((e, i)=>{
+            numeroInicial = parseInt(e[0].replace(/\D/g, ""))
+            numeroInicial+=1
+            return e[0]
+            //  EG. 'N5'
         })
 
-        let letrasDeSegundaTab = ['C', 'D', 'E', 'F']
-        
-        let archivo = promediosDeTercero.Sheets
-        
-        console.log(promediosDeTercero.Sheets[promediosKey])
+        let letraOnlyProm = celdasDeProm.map(e=>{
+            return e.replace(/[0-9]/g, '')
+        })
 
-        console.log(letraOnly)
-        
-
+        let letraOnlyNom = celdasDeNom.map(e=>{
+            return e.replace(/[0-9]/g, '')
+        })
     
         
-        let promedioCelda = promediosDeTercero.Sheets[promediosKey].C6.v
-        // promedioCelda = 
+        let letrasDeSegundaTab = ['C', 'D', 'E']
 
+        let archivoSegundaPestana = promediosDeTercero.Sheets[promediosKey]
+        let archivoPrimeraPestana = promediosDeTercero.Sheets[promediosTrimestre1]
+        console.log(archivoSegundaPestana)
+       
+        let nombres = []
+        for (let i = 0; i<letraOnlyNom.length; i++){
+            for(let n = numeroInicial; n<48; n++){
+            
+            if(archivoPrimeraPestana[`${letraOnlyNom[i]+n}`]===undefined){
+                console.log('hai')
+            }else {
+                nombres.push([archivoPrimeraPestana[`${letraOnlyNom[i]+n}`].v, archivoPrimeraPestana[`${letraOnlyProm[i]+n}`].v])
+            
+            }
+               
+            }
+        }
+        
+        console.log(nombres)
+        setNombrePromedio([...nombres])
+        console.log(nombrePromedio)
+        // Now find the names and match them on the segunda pestana -----------------------
+        
+
+        // entry[0] va en 1Trim, entry[1] en la segunda etc
+        // for(let i = 0; i<nombrePromedio; i++){
+        //     for(let n =0; n<45; n++){
+        //         if(nombrePromedio[i][0]===archivoSegundaPestana[`B${n}`].v){
+        //             console.log(nombrePromedio[i])
+        //         }
+        //     }
+        // }
+
+        // nombrePromedio.map(entry=>{
+        //     archivoSegundaPestana['C'] = entry
+        //     =entry[1]
+
+        // })
+        
+    }    
+
+    const anadirPromediosToSheet = () =>{
+        let promediosKey = Object.keys(promediosDeTercero.Sheets)[1]
+        let promediosTrimestre1 = Object.keys(promediosDeTercero.Sheets)[0]
+        let archivoSegundaPestana = promediosDeTercero.Sheets[promediosKey]
+        let archivoPrimeraPestana = promediosDeTercero.Sheets[promediosTrimestre1]
+        let entriesDeSegundaPestana = Object.entries(archivoSegundaPestana)
+        
+        for(let i = 0; i<entriesDeSegundaPestana.length; i++){
+
+            let filtered = nombrePromedio.filter(e=>{
+                return entriesDeSegundaPestana[i][1].v === e[0]
+                  
+             })
+
+         if(filtered.length===0){
+            
+        }else{
+            
+            console.log(filtered)
+            }
+           
+        }
+
+
+        console.log(entriesDeSegundaPestana)
+        
+
+        // nombrePromedio.map(e=>{
+        //     archivoSegundaPestana
+        // })
 
     }
   
@@ -169,6 +243,7 @@ export default function Promedios() {
     <br></br>
     <br></br>
     <button onClick={()=>createPromedios()}>get promedios</button>
+    <button onClick={()=>anadirPromediosToSheet()}>anadir promedios to excel</button>
    
     </>
   )
