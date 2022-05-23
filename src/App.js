@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx'
 import Button from 'react-bootstrap'
 import GradesTable from './Components/gradesTable';
 import PdfCreater from './Components/PdfCreater';
+import Promedios from './Components/Promedios'
 import {Buffer} from 'buffer';
 import axios from 'axios'
 import AWS from 'aws-sdk'
@@ -17,7 +18,7 @@ function App() {
  
   
 const [grades, setGrades] = useState('')
-const [excelFile, setexcelFile] = useState()
+const [excelFile, setExcelFile] = useState()
 const [objKey, setObjkey] = useState()
 const [nombreDeMateria, setNombreDeMateria] = useState()
 const [calificacion, setCalificacion] = useState()
@@ -34,7 +35,7 @@ const [calificacion, setCalificacion] = useState()
       }
 
       const wb = XLSX.read(bstr, { type: "binary" });
-      setexcelFile(wb.Sheets)
+      setExcelFile(wb.Sheets)
       
     };
     reader.readAsBinaryString(file);
@@ -120,8 +121,9 @@ useEffect(()=>{
 
       <div id="calificasiones">
         <h2>{}</h2>
-
+        
       </div>
+      <Promedios />
 
     </div>
     </>

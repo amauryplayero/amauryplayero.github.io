@@ -138,3 +138,7 @@ table td{
     border: none;
     padding: 5px;
 }
+
+.checkMarkIcon{
+    width: 25px;
+}
