@@ -7,8 +7,8 @@ import ConstanciaCreater from './ConstanciaCreater'
 import {useNavigate} from 'react-router-dom'
 import {Buffer} from 'buffer';
 import React from 'react'
-import { stringify } from 'querystring'
-import { resolveModuleName } from 'typescript'
+
+
 
 export default function Estudiante() {
     const navigate = useNavigate()
