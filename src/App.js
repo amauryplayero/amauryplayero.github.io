@@ -98,8 +98,8 @@ useEffect(()=>{
 
   return (
     <>
-    <div style={{display:'none'}}>
           <button onClick={()=>handleBackButton()}>go back</button>
+    <div style={{display:'none'}}>
           <div id="dropZoneContainer">
             {/* <div id="dropZone" ondrop={()=>handleUploadFile()}>
                   <p>Drag one or more files to this Drop Zone ...</p>
