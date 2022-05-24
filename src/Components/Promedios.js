@@ -353,7 +353,7 @@ if(promediosDeTercero!==undefined){
         let entriesDeTerceraPestana = Object.entries(archivoTerceraPestana)
         // console.log(archivoTerceraPestana)
        console.log(nombrePromedioDePrimero)
-    //    console.log(entriesDeTerceraPestana)
+       console.log(entriesDeTerceraPestana)
 
         for(let i = 0; i<entriesDeTerceraPestana.length; i++){
             // console.log(entriesDeTerceraPestana[i])
@@ -361,11 +361,28 @@ if(promediosDeTercero!==undefined){
              let celdaDeNombre = 'D'
            
            let calificacionDePrimero = nombrePromedioDePrimero.filter(e=>{
-               return entriesDeTerceraPestana[i][1].v === e[0]
+               if(typeof entriesDeTerceraPestana[i][1].v==='number' || entriesDeTerceraPestana[i][1].v===undefined){
+
+               }else {
+                   console.log(entriesDeTerceraPestana[i][1].v.replace(/\s/g, ""))
+               let nombreEnBoletaDeTercero = entriesDeTerceraPestana[i][1].v.replace(/\s+/g, '')
+               let nombreEnBoletaVieja = e[0].replace(/\s+/g, '')
+               
+               return nombreEnBoletaDeTercero === nombreEnBoletaVieja
+               }
            })
             let calificacionDeSegundo = nombrePromedioDeSegundo.filter(e=>{
+                if(typeof entriesDeTerceraPestana[i][1].v==='number' || entriesDeTerceraPestana[i][1].v===undefined){
+
+                }else {
+                    console.log(entriesDeTerceraPestana[i][1].v.replace(/\s/g, ""))
+                let nombreEnBoletaDeTercero = entriesDeTerceraPestana[i][1].v.replace(/\s+/g, '')
+                let nombreEnBoletaVieja = e[0].replace(/\s+/g, '')
                 
-                return entriesDeTerceraPestana[i][1].v === e[0]
+                return nombreEnBoletaDeTercero === nombreEnBoletaVieja
+                }
+                
+               
             })
             let calificacionDeTercero = nombrePromedio.filter(e=>{
                 return entriesDeSegundaPestana[i][1].v === e[0]
@@ -373,15 +390,15 @@ if(promediosDeTercero!==undefined){
 
 
             console.log(calificacionDeSegundo)
-            if(calificacionDeSegundo.length===0){
+            if(calificacionDePrimero.length===0){
                 console.log(entriesDeTerceraPestana[i])
             }else{
                 let cellNo = entriesDeTerceraPestana[i][0].substring(1)
                 console.log(cellNo)
                 
+                archivoTerceraPestana['C'+`${cellNo}`].v=calificacionDePrimero[0][1]
                 archivoTerceraPestana['D'+`${cellNo}`].v=calificacionDeSegundo[0][1]
                 archivoTerceraPestana['E'+`${cellNo}`].v=calificacionDeTercero[0][1]
-                archivoTerceraPestana['C'+`${cellNo}`].v=calificacionDePrimero[0][1]
                 
               
 
@@ -436,16 +453,16 @@ if(promediosDeTercero!==undefined){
     <div>
     <h3>1er Año </h3>
     <input type="file" onChange={(e)=>handlePrimerAno(e)} />
-    <button onClick={()=>createPromedioDePrimero()}>UPLOAD</button>
+    {fileChecker1}<button onClick={()=>createPromedioDePrimero()}>UPLOAD</button>
     </div>
-    {fileChecker1}
+    
 
 
     <h3>2do Año</h3>
     <input type="file" onChange={(e)=>{handleSegundoAno(e)
                                        }} />
-    <button onClick={()=>createPromedioDeSegundo()}>UPLOAD</button>
-    {fileChecker2}
+    {fileChecker2}<button onClick={()=>createPromedioDeSegundo()}>UPLOAD</button>
+    
    
     
     <h3>3er Año</h3>
@@ -453,8 +470,7 @@ if(promediosDeTercero!==undefined){
                                     }} />
     {fileChecker3}
    
-    <br></br>
-    <br></br>
+   
     {/* <button onClick={()=>createPromedios()}>get promedios</button> */}
     <button onClick={()=>{createPromediosDeTercero()
         }}>UPLOAD</button>
