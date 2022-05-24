@@ -98,34 +98,36 @@ useEffect(()=>{
 
   return (
     <>
-      <button onClick={()=>handleBackButton()}>go back</button>
-      <div id="dropZoneContainer">
-        {/* <div id="dropZone" ondrop={()=>handleUploadFile()}>
-              <p>Drag one or more files to this Drop Zone ...</p>
-        </div> */}
-      </div>
+    <div style={{display:'none'}}>
+          <button onClick={()=>handleBackButton()}>go back</button>
+          <div id="dropZoneContainer">
+            {/* <div id="dropZone" ondrop={()=>handleUploadFile()}>
+                  <p>Drag one or more files to this Drop Zone ...</p>
+            </div> */}
+          </div>
 
-    <div className="App">
-      <div id="fileUploadContainer">
-        <div id="fileUpload">
-            <p>Seleccione calificaciones actuales</p>
-          <input type="file" onChange={(e)=>onChange(e)} />
-          <button onClick={()=>handleUploadFile()} id="uploadFileButton">UPLOAD</button>
+        <div className="App">
+          <div id="fileUploadContainer">
+            <div id="fileUpload">
+                <p>Seleccione calificaciones actuales</p>
+              <input type="file" onChange={(e)=>onChange(e)} />
+              <button onClick={()=>handleUploadFile()} id="uploadFileButton">UPLOAD</button>
+            </div>
+            {/* <input type="button" id="upload" value="Upload" /> */}
         </div>
-        {/* <input type="button" id="upload" value="Upload" /> */}
-     </div>
-     <div>
-       {grades}
-     </div>
+        <div>
+          {grades}
+        </div>
 
 
-      <div id="calificasiones">
-        <h2>{}</h2>
-        
+          <div id="calificasiones">
+            <h2>{}</h2>
+            
+          </div>
       </div>
+    </div>
       <Promedios />
 
-    </div>
     </>
   );
 }

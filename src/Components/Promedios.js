@@ -18,14 +18,15 @@ export default function Promedios() {
     const [nombrePromedioDePrimero, setNombrePromedioDePrimero] = useState()
     useEffect(() => {
         // Runs ONCE after initial rendering
-        if(promediosDeSegundo!==undefined){
-      createPromedioDeSegundo()
+        
      
+  
+     
+if(promediosDeTercero!==undefined){
 
-        }else if(promediosDeTercero!==undefined){
-            anadirPromediosToSheet()
+            // createPromediosDeTercero()
         }
-      }, [promediosDeSegundo, nombrePromedio]);
+      }, [promediosDeSegundo, nombrePromedioDePrimero, nombrePromedioDeSegundo]);
     
 
 
@@ -63,7 +64,31 @@ export default function Promedios() {
             
         };
         reader.readAsBinaryString(file);
+        if(promediosDeSegundo===undefined){
+
+        }else{
+            createPromedioDeSegundo()
+        }
        
+    }
+
+    const handleTercerAno = (e) =>{
+        
+        const [file] = e.target.files
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+         
+            const bstr = evt.target.result;
+            let body = {
+              fileEncoded:bstr
+            }
+
+            const wb = XLSX.read(bstr, { type: "binary" });
+            setPromediosDeTercero(wb)
+            
+        };
+        reader.readAsBinaryString(file);
+        
     }
 
 
@@ -126,7 +151,7 @@ export default function Promedios() {
         }
 
         setNombrePromedioDePrimero([...nombresPromediosArr])
-        // console.log(nombrePromedioDeSegundo)
+        console.log(nombrePromedioDePrimero)
     }
 
 
@@ -187,44 +212,7 @@ export default function Promedios() {
         }
 
         setNombrePromedioDeSegundo([...nombresPromediosArr])
-        // console.log(nombrePromedioDeSegundo)
     }
-    
-
-    
-
-    // create workbook from grado into state EX. promedios de Tercero
-    const handleTercerAno = (e) =>{
-        
-        const [file] = e.target.files
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-         
-            const bstr = evt.target.result;
-            let body = {
-              fileEncoded:bstr
-            }
-
-            const wb = XLSX.read(bstr, { type: "binary" });
-            setPromediosDeTercero(wb)
-            
-        };
-        reader.readAsBinaryString(file);
-        
-    }
-
-    const addEquationToCells = () =>{
-        let promediosKey = Object.keys(promediosDeTercero.Sheets)[1]
-        let entries = Object.entries(promediosDeTercero.Sheets[promediosKey])
-        let filteredEntriesThatContainNombre = entries.filter(entry=>{
-            return entry[1].v==='NOMBRE DEL ALUMNO'
-        })
-
-        
-
-    }
-
-    
     const createPromediosDeTercero = () =>{
         let promediosTrimestre1 = Object.keys(promediosDeTercero.Sheets)[0]
         let promediosKey = Object.keys(promediosDeTercero.Sheets)[1]
@@ -291,13 +279,35 @@ export default function Promedios() {
             }
         }
         setNombrePromedio([...nombresPromediosArr])
-        console.log(nombrePromedio)
-        console.log(promediosDeTercero)
+        
+     
 
     
-    }    
+    } 
+
+    
+
+    
+
+    // create workbook from grado into state EX. promedios de Tercero
+
+
+    const addEquationToCells = () =>{
+        let promediosKey = Object.keys(promediosDeTercero.Sheets)[1]
+        let entries = Object.entries(promediosDeTercero.Sheets[promediosKey])
+        let filteredEntriesThatContainNombre = entries.filter(entry=>{
+            return entry[1].v==='NOMBRE DEL ALUMNO'
+        })
+
+        
+
+    }
+
+    
+     
 // console.log(promediosDeTercero)
     const anadirPromediosToSheet = () =>{
+    
         // 
         let promediosTrimestre1 = Object.keys(promediosDeTercero.Sheets)[0]
         let promediosKey = Object.keys(promediosDeTercero.Sheets)[1]
@@ -341,15 +351,18 @@ export default function Promedios() {
         
 
         let entriesDeTerceraPestana = Object.entries(archivoTerceraPestana)
-        console.log(archivoTerceraPestana)
-    //    console.log(nombrePromedio)
-       console.log(entriesDeTerceraPestana)
+        // console.log(archivoTerceraPestana)
+       console.log(nombrePromedioDePrimero)
+    //    console.log(entriesDeTerceraPestana)
 
         for(let i = 0; i<entriesDeTerceraPestana.length; i++){
             // console.log(entriesDeTerceraPestana[i])
             // let celdaDeNombre = filteredEntryThatContainsNombreEnTercera.substring(1)
              let celdaDeNombre = 'D'
-
+           
+           let calificacionDePrimero = nombrePromedioDePrimero.filter(e=>{
+               return entriesDeTerceraPestana[i][1].v === e[0]
+           })
             let calificacionDeSegundo = nombrePromedioDeSegundo.filter(e=>{
                 
                 return entriesDeTerceraPestana[i][1].v === e[0]
@@ -358,9 +371,6 @@ export default function Promedios() {
                 return entriesDeSegundaPestana[i][1].v === e[0]
             })
 
-            let calificacionDePrimero = nombrePromedioDePrimero.filter(e=>{
-                return entriesDeTerceraPestana[i][1].v === e[0]
-            })
 
             console.log(calificacionDeSegundo)
             if(calificacionDeSegundo.length===0){
@@ -392,8 +402,31 @@ export default function Promedios() {
         // let modifiedWb = XLSX.write(modifiedFile, {})
         XLSX.writeFile(excelFile,'TEST DELETE.xlsx', { ignoreEC: true, bookType: 'xlsx'})
     }
+    let greenCheckMark = <img src="https://i.imgur.com/52es1vp.png" class="checkMarkIcon"></img>
+    let fileChecker1 = <img src="https://i.imgur.com/AuFpdp2.png" class="checkMarkIcon"></img>
+    if(nombrePromedioDePrimero!==undefined){
+        fileChecker1 = greenCheckMark
+    } else {
+    }
+    let fileChecker2 =<img src="https://i.imgur.com/AuFpdp2.png" class="checkMarkIcon"></img>
+     if(nombrePromedioDeSegundo!==undefined){
+        fileChecker2 = greenCheckMark
+    } else {
+    }
 
-    let fileChecker = <img src="https://i.imgur.com/52es1vp.png" class="checkMarkIcon"></img>
+    let fileChecker3 = <img src="https://i.imgur.com/AuFpdp2.png" class="checkMarkIcon"></img>
+    if(nombrePromedio!==undefined){
+        fileChecker3 = greenCheckMark
+    } else {
+    }
+
+    let descargarButton
+    if(fileChecker1===greenCheckMark && fileChecker2===greenCheckMark && fileChecker3===greenCheckMark){
+    descargarButton = <button onClick={()=>{anadirPromediosToSheet()}}>DESCARGAR</button>
+    }else {
+        
+       
+    }
 
 
   return (
@@ -403,26 +436,32 @@ export default function Promedios() {
     <div>
     <h3>1er Año </h3>
     <input type="file" onChange={(e)=>handlePrimerAno(e)} />
+    <button onClick={()=>createPromedioDePrimero()}>UPLOAD</button>
     </div>
+    {fileChecker1}
+
 
     <h3>2do Año</h3>
     <input type="file" onChange={(e)=>{handleSegundoAno(e)
-                                        }} />
-    <button onClick={()=>createPromedioDeSegundo()}>SEGUNDO GRADO</button>
-    
+                                       }} />
+    <button onClick={()=>createPromedioDeSegundo()}>UPLOAD</button>
+    {fileChecker2}
    
     
     <h3>3er Año</h3>
     <input type="file" onChange={(e)=>{handleTercerAno(e)
                                     }} />
-    
+    {fileChecker3}
    
     <br></br>
     <br></br>
     {/* <button onClick={()=>createPromedios()}>get promedios</button> */}
     <button onClick={()=>{createPromediosDeTercero()
-        anadirPromediosToSheet()}}>anadir promedios to excel</button>
-   
+        }}>UPLOAD</button>
+        <br></br>
+        <br></br>
+  
+{descargarButton}
     </>
   )
 }
