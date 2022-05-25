@@ -404,7 +404,7 @@ console.log(promediosDeTercero)
                 
             //     const average = arr.reduce((a, b) => a + b, 0) / arr.length;
             //    console.log(arr)
-            //     archivoTerceraPestana['F'+`${cellNo}`].z=.toFixed(2)
+                archivoTerceraPestana['F'+`${cellNo}`].z="0.00"
                 
               
 
