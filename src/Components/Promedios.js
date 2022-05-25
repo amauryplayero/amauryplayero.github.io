@@ -472,10 +472,12 @@ console.log(promediosDeTercero)
       <>
             <div>Promedios</div>
       <div class="mainPromediosContainer">
+            <div id="instructions">
             <h3>Elije un archivo por año. Despues presiona Listo.<br></br>
                 Cuando hayan salido las tres palomitas, saldra un<br></br>
                 boton que dirá descargar. </h3>
                 <br></br>
+            </div>
 
             <div class='yearContainer'>
                 
