@@ -349,7 +349,7 @@ if(promediosDeTercero!==undefined){
 // loop where the third sheets is injected with values. 
         // let celdaDePrimero = filteredEntryThatContainsPrimero.substring(1)
         
-
+console.log(promediosDeTercero)
         let entriesDeTerceraPestana = Object.entries(archivoTerceraPestana)
         // console.log(archivoTerceraPestana)
        console.log(nombrePromedioDePrimero)
@@ -389,16 +389,22 @@ if(promediosDeTercero!==undefined){
             })
 
 
-            console.log(calificacionDeSegundo)
+            // console.log(calificacionDeSegundo)
             if(calificacionDePrimero.length===0){
-                console.log(entriesDeTerceraPestana[i])
+                // console.log(entriesDeTerceraPestana[i])
             }else{
                 let cellNo = entriesDeTerceraPestana[i][0].substring(1)
-                console.log(cellNo)
+                // console.log(cellNo)
+                
                 
                 archivoTerceraPestana['C'+`${cellNo}`].v=calificacionDePrimero[0][1]
                 archivoTerceraPestana['D'+`${cellNo}`].v=calificacionDeSegundo[0][1]
                 archivoTerceraPestana['E'+`${cellNo}`].v=calificacionDeTercero[0][1]
+            //     let arr = [parseFloat(calificacionDePrimero[0][1]),parseFloat(calificacionDeSegundo[0][1]),parseFloat(calificacionDeTercero[0][1])]
+                
+            //     const average = arr.reduce((a, b) => a + b, 0) / arr.length;
+            //    console.log(arr)
+            //     archivoTerceraPestana['F'+`${cellNo}`].z=.toFixed(2)
                 
               
 
@@ -407,6 +413,19 @@ if(promediosDeTercero!==undefined){
 
 
         }
+        
+        let archivoEnTerceraPestana = promediosDeTercero.Sheets[terceraPestana]
+
+        for(let i = 0; i<50; i++){
+            // if(archivoTerceraPestana['F'+`${[i]}`].v===undefined){
+
+            // }else {
+            // console.log(archivoTerceraPestana['F'+`${[i]}`].v.toFixed(1))
+            console.log(archivoTerceraPestana['F'+`${[i]}`])
+
+            // }
+        }
+
         console.log(promediosDeTercero)
         XLSX.writeFile(promediosDeTercero,'TEST DELETE.xlsx', { ignoreEC: true, bookType: 'xlsx'})
 
