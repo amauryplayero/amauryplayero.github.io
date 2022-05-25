@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
-
+import {useDropZone} from 'react-dropzone'
 // import XLSX_ZAHL_PAYLOAD from 'https://cdn.sheetjs.com/xlsx-0.18.7/package/dist/xlsx.zahl.mjs';
 import * as XLSX from 'xlsx'
 import '../App.css';
@@ -458,45 +458,58 @@ console.log(promediosDeTercero)
 
     let descargarButton
     if(fileChecker1===greenCheckMark && fileChecker2===greenCheckMark && fileChecker3===greenCheckMark){
-    descargarButton = <button onClick={()=>{anadirPromediosToSheet()}}>DESCARGAR</button>
+    descargarButton = <button onClick={()=>{anadirPromediosToSheet()}}><img id="downloadIcon" src="https://i.imgur.com/GAASer9.png"></img>DESCARGAR</button>
     }else {
         
        
     }
 
+    let xlsxIcon = <img class="xlsxIcon"src="https://i.imgur.com/4wfuxJT.png"></img>
 
+
+   
   return (
       <>
-    <div>Promedios</div>
+            <div>Promedios</div>
+      <div class="mainPromediosContainer">
+            <h3>Elije un archivo por año. Despues presiona Listo.<br></br>
+                Cuando hayan salido las tres palomitas, saldra un<br></br>
+                boton que dirá descargar. </h3>
+                <br></br>
 
-    <div>
-    <h3>1er Año </h3>
-    <input type="file" onChange={(e)=>handlePrimerAno(e)} />
-    {fileChecker1}<button onClick={()=>createPromedioDePrimero()}>UPLOAD</button>
+            <div class='yearContainer'>
+                
+                <h2>{xlsxIcon}1er Año </h2>
+                <input type="file" onChange={(e)=>handlePrimerAno(e)} />
+                {fileChecker1}
+                <button onClick={()=>createPromedioDePrimero()}>Listo</button>
+                
+            </div>
+            
+
+            <div class="yearContainer">
+                <h2>{xlsxIcon}2do Año</h2>
+          
+                <input type="file" onChange={(e)=>{handleSegundoAno(e)}} />
+                {fileChecker2}
+                <button onClick={()=>createPromedioDeSegundo()}>Listo</button>
+            </div>
+        
+            <div class='yearContainer'>
+                <h2>{xlsxIcon}3er Año</h2>
+                <input type="file" onChange={(e)=>{handleTercerAno(e)}} />
+                {fileChecker3}
+            <button onClick={()=>{createPromediosDeTercero()}}>Listo</button>
+            </div>
+        
+        
+            {/* <button onClick={()=>createPromedios()}>get promedios</button> */}
+                <br></br>
+                <br></br>
+        
+            {descargarButton}
+            {/* <button id="downloadButton"onClick={()=>{anadirPromediosToSheet()}}>DESCARGAR  <img id="downloadIcon" src="https://i.imgur.com/GAASer9.png"></img></button> */}
     </div>
-    
-
-
-    <h3>2do Año</h3>
-    <input type="file" onChange={(e)=>{handleSegundoAno(e)
-                                       }} />
-    {fileChecker2}<button onClick={()=>createPromedioDeSegundo()}>UPLOAD</button>
-    
-   
-    
-    <h3>3er Año</h3>
-    <input type="file" onChange={(e)=>{handleTercerAno(e)
-                                    }} />
-    {fileChecker3}
-   
-   
-    {/* <button onClick={()=>createPromedios()}>get promedios</button> */}
-    <button onClick={()=>{createPromediosDeTercero()
-        }}>UPLOAD</button>
-        <br></br>
-        <br></br>
-  
-{descargarButton}
     </>
   )
 }

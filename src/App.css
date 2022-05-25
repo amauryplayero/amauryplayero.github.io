@@ -132,13 +132,60 @@ table td{
 
 #uploadFileButton{
     background-color: rgb(37, 189, 37);
-    color: white;
-    font-weight: bold;
-    border-radius: 9px;
+    color: rgb(255, 255, 255);
+    /* font-weight: bold; */
+    border-radius: 8px;
     border: none;
     padding: 5px;
 }
 
 .checkMarkIcon{
     width: 25px;
+}
+.yearContainer{
+    box-shadow: 4px 3px 6px rgb(222, 222, 222);
+    padding: 15px;
+    margin-bottom: 20px;
+border:3px rgb(123, 123, 228) solid;
+background-color: rgb(230, 230, 230);
+border-radius: 10px;
+
+
+}
+
+#downloadIcon{
+    width: 15px;
+}
+
+#downloadButton{
+    font-weight: bolder;  
+    color: white;
+    background-color: rgb(96, 223, 71);
+    border-radius: 12px;
+    border: none;
+    padding: 10px;
+}
+.mainPromediosContainer{
+    /* border: red solid; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.xlsxIcon{
+    width: 26px;
+    margin-right: 10px;
+
+}
+
+.uploadButton{
+    font-weight:bolder;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 2px rgb(128, 128, 128) solid;
+    padding: 10px;
+    color: rgb(67, 67, 67);
+    background-color: rgb(215, 215, 215);
 }
