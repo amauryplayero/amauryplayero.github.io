@@ -339,6 +339,7 @@ if(promediosDeTercero!==undefined){
                 archivoSegundaPestana['C'+`${cellNo}`].v=filtered[0][1]
                 archivoSegundaPestana['D'+`${cellNo}`].v=filtered[1][1]
                 archivoSegundaPestana['E'+`${cellNo}`].v=filtered[2][1]
+                archivoSegundaPestana['F'+`${cellNo}`].z="0.0"
                 // console.log(filtered)
               
 
@@ -427,7 +428,7 @@ console.log(promediosDeTercero)
         }
 
         console.log(promediosDeTercero)
-        XLSX.writeFile(promediosDeTercero,'TEST DELETE.xlsx', { ignoreEC: true, bookType: 'xlsx'})
+        XLSX.writeFile(promediosDeTercero,'PROMEDIOS.xlsx', { ignoreEC: true, bookType: 'xlsx'})
 
  
     }
