@@ -17,14 +17,9 @@ export default function Promedios() {
     const [nombrePromedioDeSegundo, setNombrePromedioDeSegundo] = useState()
     const [nombrePromedioDePrimero, setNombrePromedioDePrimero] = useState()
     useEffect(() => {
-        // Runs ONCE after initial rendering
-        
      
-  
-     
-if(promediosDeTercero!==undefined){
+    if(promediosDeTercero!==undefined){
 
-            // createPromediosDeTercero()
         }
       }, [promediosDeSegundo, nombrePromedioDePrimero, nombrePromedioDeSegundo]);
     
@@ -348,7 +343,7 @@ if(promediosDeTercero!==undefined){
         }
         
 // loop where the third sheets is injected with values. 
-        // let celdaDePrimero = filteredEntryThatContainsPrimero.substring(1)
+      
         
 console.log(promediosDeTercero)
         let entriesDeTerceraPestana = Object.entries(archivoTerceraPestana)
@@ -357,8 +352,7 @@ console.log(promediosDeTercero)
        console.log(entriesDeTerceraPestana)
 
         for(let i = 0; i<entriesDeTerceraPestana.length; i++){
-            // console.log(entriesDeTerceraPestana[i])
-            // let celdaDeNombre = filteredEntryThatContainsNombreEnTercera.substring(1)
+
              let celdaDeNombre = 'D'
            
            let calificacionDePrimero = nombrePromedioDePrimero.filter(e=>{
@@ -395,16 +389,11 @@ console.log(promediosDeTercero)
                 // console.log(entriesDeTerceraPestana[i])
             }else{
                 let cellNo = entriesDeTerceraPestana[i][0].substring(1)
-                // console.log(cellNo)
-                
-                
+
                 archivoTerceraPestana['C'+`${cellNo}`].v=calificacionDePrimero[0][1]
                 archivoTerceraPestana['D'+`${cellNo}`].v=calificacionDeSegundo[0][1]
                 archivoTerceraPestana['E'+`${cellNo}`].v=calificacionDeTercero[0][1]
-            //     let arr = [parseFloat(calificacionDePrimero[0][1]),parseFloat(calificacionDeSegundo[0][1]),parseFloat(calificacionDeTercero[0][1])]
-                
-            //     const average = arr.reduce((a, b) => a + b, 0) / arr.length;
-            //    console.log(arr)
+  
                 archivoTerceraPestana['F'+`${cellNo}`].z="0.0"
                 
               
@@ -435,8 +424,6 @@ console.log(promediosDeTercero)
   
     async function changeValue (){
         excelFile.Sheets["CONCENTRADOS DE LOS TRIM"].G7 = { t:'n', v:93, w:'93'} 
-        // let modifiedFile =  excelFile.Sheets["CONCENTRADOS DE LOS TRIM"].G7 = { t:'n', v:93, w:'93'} 
-        // let modifiedWb = XLSX.write(modifiedFile, {})
         XLSX.writeFile(excelFile,'TEST DELETE.xlsx', { ignoreEC: true, bookType: 'xlsx'})
     }
     let greenCheckMark = <img src="https://i.imgur.com/52es1vp.png" class="checkMarkIcon"></img>
@@ -459,7 +446,7 @@ console.log(promediosDeTercero)
 
     let descargarButton
     if(fileChecker1===greenCheckMark && fileChecker2===greenCheckMark && fileChecker3===greenCheckMark){
-    descargarButton = <button onClick={()=>{anadirPromediosToSheet()}}><img id="downloadIcon" src="https://i.imgur.com/GAASer9.png"></img>DESCARGAR</button>
+    descargarButton = <button id="downloadButton" onClick={()=>{anadirPromediosToSheet()}}><img id="downloadIcon" src="https://i.imgur.com/GAASer9.png"></img>DESCARGAR</button>
     }else {
         
        
@@ -471,7 +458,7 @@ console.log(promediosDeTercero)
    
   return (
       <>
-            <div>Promedios</div>
+          
       <div class="mainPromediosContainer">
             <div id="instructions">
             <h3>Elije un archivo por año. Despues presiona Listo.<br></br>
