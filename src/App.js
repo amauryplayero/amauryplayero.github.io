@@ -7,6 +7,7 @@ import Button from 'react-bootstrap'
 import GradesTable from './Components/gradesTable';
 import PdfCreater from './Components/PdfCreater';
 import Promedios from './Components/Promedios'
+import Agenda from './Components/Agenda'
 import {Buffer} from 'buffer';
 import axios from 'axios'
 import AWS from 'aws-sdk'
@@ -127,6 +128,7 @@ useEffect(()=>{
       </div>
     </div>
       <Promedios />
+      
 
     </>
   );

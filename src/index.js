@@ -5,6 +5,7 @@ import App from './App';
 import Login from './Components/Login'
 import reportWebVitals from './reportWebVitals';
 import Estudiante from './Components/Estudiante';
+import Agenda from './Components/Agenda'
 import { BrowserRouter,  Routes, Route } from 'react-router-dom';
 
 
@@ -12,9 +13,10 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<Login />} />
         <Route path="admin" element={<App />} />
         <Route path="estudiante" element={<Estudiante />} />
+        <Route path="agenda" element={<Agenda />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

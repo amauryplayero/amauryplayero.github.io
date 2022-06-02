@@ -25,8 +25,13 @@ let navigate = useNavigate()
               <button id="estudiante" class="botonDeLogin" onClick={(e)=>handleClick(e)}><img id="estudiante" onClick={(e)=>handleClick(e)} src={estudianteSvg}></img>Soy estudiante</button>
               </div>
 
-            <div>
-              <button id="admin" onClick={(e)=>handleClick(e)} class="botonDeLogin"> <img id="admin" onClick={(e)=>handleClick(e)} src='https://i.imgur.com/H0lQl3h.png'></img>Soy administrador</button></div>
+              <div>
+                <button id="admin" onClick={(e)=>handleClick(e)} class="botonDeLogin"> <img id="admin" onClick={(e)=>handleClick(e)} src='https://i.imgur.com/H0lQl3h.png'></img>Soy administrador</button>
+              </div>
+
+              <div>
+                <button id="agenda" onClick={(e)=>handleClick(e)} class="botonDeLogin"> <img id="agenda" onClick={(e)=>handleClick(e)} src='https://i.imgur.com/H0lQl3h.png'></img>Agenda</button>
+              </div>
         </div>
       </div>
     </>
